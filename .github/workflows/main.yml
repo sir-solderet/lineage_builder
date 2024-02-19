@@ -9,21 +9,20 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # Check-out in order to access the repository's files.
-    - name: Check-out to repository
-      uses: actions/checkout@v4
+    - name: Cleanup
+      run: rm -rf *
     - name: Create workspace
       run: mkdir gsi
       continue-on-error: true
-
     - name: Enter Workspace
       run: cd gsi 
       continue-on-error: true
-    - name: Cleanup
-      run: rm -rf *
+      # Check-out in order to access the repository's files.
+    - name: Check-out to repository
+      uses: actions/checkout@v4      
     - name: Exports
       run: |
-        export BUILD_HOSTNAME=crave; \
+        export BUILD_HOSTNAME=crave
         export BUILD_USERNAME=OkBuddyGSI
     - name: Run Script
       run: bash build.sh
