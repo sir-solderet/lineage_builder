@@ -9,13 +9,13 @@ set -e
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
-repo init -u https://github.com/ProjectMatrixx/android.git -b 14.0 --git-lfs ;\
+repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
 
 # Clone local_manifests repository
 git clone https://github.com/Shirayuki39/treble_manifest.git .repo/local_manifests -b 14 ;\
 
 # Removals
-rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java && \
+# rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java && \
 
 # Sync the repositories
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
@@ -24,7 +24,7 @@ bash patches/apply-patches.sh . && \
 
 # Set up build environment
 cd device/phh/treble
-bash generate.sh matrixx && \
+bash generate.sh RisingOS+GApps && \
 
 source build/envsetup.sh && \
 
