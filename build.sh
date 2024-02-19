@@ -2,11 +2,10 @@
 
 set -e
 
-# Initialize repo with specified manifest
+# Set Crave to build using LineageOS 21 as base
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 crave set --projectID 72
-crave push patches
-crave push RisingOS.mk device/phh/treble
+
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run -- "rm -rf .repo/local_manifests && \
@@ -17,17 +16,23 @@ repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
 git clone https://github.com/Shirayuki39/treble_manifest.git .repo/local_manifests -b 14 ;\
 
 # Removals
-# rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java && \
+# rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java RisingOS_gsi patches device/phh/treble && \
 
 # Sync the repositories
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
 
+# Clone our GSI Repo
+git clone https://github.com/Shirayuki39/RisingOS_gsi -b 14 && \
+mv RisingOS_gsi/patches patches; \
+mv RisingOS_gsi/patches/RisingOS.mk device/phh/treble; \
+
+# Apply Patches
 bash patches/apply-patches.sh . && \
 
 # Set up build environment
 cd device/phh/treble
 bash generate.sh RisingOS+GApps && \
-
+cd ../../.. && \
 source build/envsetup.sh && \
 
 # Lunch configuration
