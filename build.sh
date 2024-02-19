@@ -22,7 +22,7 @@ git clone https://github.com/Shirayuki39/treble_manifest.git .repo/local_manifes
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
 
 # Clone our GSI Repo
-git clone https://github.com/Shirayuki39/RisingOS_gsi -b 14 && \
+git clone https://github.com/OkBuddyGSI/RisingOS_gsi -b 14 && \
 mv RisingOS_gsi/patches patches; \
 mv RisingOS_gsi/patches/RisingOS.mk device/phh/treble; \
 
