@@ -3,10 +3,9 @@
 set -e
 
 # Initialize repo with specified manifest
- repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-cp -rv patches /tmp/src/android/
-cp RisingOS.mk /tmp/src/android/device/phh/treble
-
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+crave push patches
+crave push RisingOS.mk device/phh/treble
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run --clean -- "rm -rf .repo/local_manifests && \
@@ -46,13 +45,11 @@ sha256sum out/target/product/*/*.img"
 # Clean up
 # rm -rf tissot/*
 
-
-
 # Pull generated zip files
 # crave pull out/target/product/*/*.zip 
 
-# Pull generated img files
-# crave pull out/target/product/*/*.img
+Pull generated img files
+crave pull out/target/product/*/*.img
 
 # Upload zips to Telegram
 # telegram-upload --to sdreleases tissot/*.zip
