@@ -9,7 +9,7 @@ crave push patches
 crave push RisingOS.mk device/phh/treble
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
-crave run --clean -- "rm -rf .repo/local_manifests && \
+crave run -- "rm -rf .repo/local_manifests && \
 # Initialize repo with specified manifest
 repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
 
@@ -34,7 +34,7 @@ source build/envsetup.sh && \
 lunch treble_arm64_bgN-userdebug ;\
 
 croot ;\
-make systemimage -j$(nproc --all) ; \
+make systemimage ; \
 echo "Date and time:" ; \
 
 # Print out/build_date.txt
@@ -49,7 +49,7 @@ sha256sum out/target/product/*/*.img"
 # Pull generated zip files
 # crave pull out/target/product/*/*.zip 
 
-Pull generated img files
+# Pull generated img files
 crave pull out/target/product/*/*.img
 
 # Upload zips to Telegram
