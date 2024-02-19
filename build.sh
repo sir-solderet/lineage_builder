@@ -4,6 +4,7 @@ set -e
 
 # Initialize repo with specified manifest
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+crave set --projectID 72
 crave push patches
 crave push RisingOS.mk device/phh/treble
 # Run inside foss.crave.io devspace, in the project folder
