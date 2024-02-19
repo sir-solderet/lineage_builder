@@ -1,0 +1,40 @@
+name: RisingOS GSI
+
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    name: Build GSIs using foss.crave.io
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Create workspace
+      run: mkdir gsi
+      continue-on-error: true
+
+    - name: Enter Workspace
+      run: cd gsi 
+      continue-on-error: true
+    - name: Cleanup
+      run: rm -rf *
+    - name: Exports
+      run: |
+        export BUILD_HOSTNAME=crave; \
+        export BUILD_USERNAME=sounddrill31
+    - name: Run Script
+      run: curl -sf https://raw.githubusercontent.com/sounddrill31/android_build_scripts_ren/rising/build.sh | sh
+    - name: Find output file
+      run: |
+        mv */system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: | 
+          *.img
+        name: ${{ github.event.inputs.MAKEFILE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          Target: ${{ github.event.inputs.MAKEFILE_NAME }}-${{ github.event.inputs.BUILD_TYPE }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
