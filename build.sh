@@ -13,10 +13,10 @@ crave run -- "rm -rf .repo/local_manifests && \
 repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs ;\
 
 # Clone local_manifests repository
-git clone https://github.com/Shirayuki39/treble_manifest.git .repo/local_manifests -b 14 ;\
+git clone https://github.com/OkBuddyGSI/treble_manifest.git .repo/local_manifests -b 14 ;\
 
 # Removals
-# rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java RisingOS_gsi patches device/phh/treble && \
+rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java RisingOS_gsi patches device/phh/treble && \
 
 # Sync the repositories
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
