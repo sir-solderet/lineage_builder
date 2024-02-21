@@ -34,11 +34,12 @@ jobs:
       run: |
         mv */system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
         mv system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
+        xz -z -k RisingOS*.img
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: | 
-          *.img
+          *.img.xz
         name: RisingOS-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
