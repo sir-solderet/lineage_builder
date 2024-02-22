@@ -31,7 +31,7 @@ bash patches/apply-patches.sh . && \
 
 # Set up build environment
 cd device/phh/treble
-bash generate.sh RisingOS+GApps && \
+bash generate.sh RisingOS && \
 cd ../../.. && \
 source build/envsetup.sh && \
 
