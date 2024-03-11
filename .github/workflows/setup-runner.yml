@@ -48,17 +48,9 @@ jobs:
         mv actions-runner y17ltebuilds
         cd y17ltebuilds
         if [[ ${{ inputs.RUNNER_TOKEN }} == github_pat_* ]]; then
-            # Generate a new runner token
-            export RUNNER_TOKEN=$(curl -sS -H "Authorization: token ${{ inputs.RUNNER_TOKEN }}" https://api.github.com/runners/registration-token | jq -r '.token')
-            curl -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ inputs.RUNNER_TOKEN }}" \
-            https://api.github.com/repos/${{ inputs.GITHUB_REPO }}/hooks \
-            -d '{"name":"web","active":true,"events":["push","pull_request"],"config":{"url":"https://api.github.com/repos/${{ inputs.GITHUB_REPO }}/actions/runners/${{ inputs.RUNNER_TOKEN }}","content_type":"json"}}'
-            echo "PAT found! Runner token generated"
+        exit 1;
         else
             echo "Runner token found"
             export RUNNER_TOKEN=${{ inputs.RUNNER_TOKEN }}
         fi
-         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${RUNNER_TOKEN} --name y17ltebuilds --work work --unattended
-         echo "Done setting up!""
+         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended && echo "Done setting up!""
