@@ -4,7 +4,6 @@ set -e
 
 # Set Crave to build using LineageOS 21 as base
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-crave set --projectID 72
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
@@ -19,7 +18,7 @@ git clone https://github.com/OkBuddyGSI/treble_manifest.git .repo/local_manifest
 rm -rf system/libhidl prebuilts/clang/host/linux-x86 prebuilt/*/webview.apk platform/external/python/pyfakefs platform/external/python/bumble external/chromium-webview/prebuilt/x86_64 platform/external/opencensus-java RisingOS_gsi patches device/phh/treble && \
 
 # Sync the repositories
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
+repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
 
 # Clone our GSI Repo
 git clone https://github.com/OkBuddyGSI/RisingOS_gsi -b 14 && \
