@@ -12,25 +12,27 @@ jobs:
     - name: Cleanup
       run: rm -rf *
     - name: Create workspace
-      run: mkdir gsi
+      run: mkdir LineageOS21
       continue-on-error: true
     - name: Enter Workspace
-      run: cd gsi 
+      run: cd LineageOS21
       continue-on-error: true
       # Check-out in order to access the repository's files.
     - name: Check-out to repository
       uses: actions/checkout@v4    
     - name: Test Local Manifests
       run: |
-        repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
-        git clone https://github.com/OkBuddyGSI/treble_manifest.git --depth 1 -b 14 .repo/local_manifests && \
+        rm -rf tester || true
+        mkdir tester
+        cd tester
+        repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+        git clone https://github.com/a57y17lte-dev/local_manifest.git --depth 1 -b main .repo/local_manifests && \
         timeout 1m repo sync --force-sync || { exit_code=$?; [ $exit_code -eq 124 ] || (echo "Error: Process failed with exit code $exit_code"; exit $exit_code); }
-        rm -rf .repo
       timeout-minutes: 10    
     - name: Exports
       run: |
         export BUILD_HOSTNAME=crave
-        export BUILD_USERNAME=OkBuddyGSI
+        export BUILD_USERNAME=a57y17lte-dev
     - name: Run Script
       run: bash build.sh
       # Only reach this when the user killed the workflow.
@@ -39,17 +41,15 @@ jobs:
       run: crave stop --all
     - name: Find output file
       run: |
-        mv */system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
-        mv system.img RisingOS-Generic-$(date +%Y%m%d)-OkBuddyGSI-EXPERIMENTATIONS.img
-        xz -z -k RisingOS*.img
+        mv */*.zip .
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: | 
-          *.img.xz
-        name: RisingOS-${{ github.run_id }}
+          *.zip
+        name: LineageOS-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
-          Target: RisingOS-Generic
+          Target: LineageOS 21 for a57y17lte
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
