@@ -37,16 +37,16 @@ fi
 # Remove existing local_manifests
 echo "Triggering build!"
 echo "Build Queued!"
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
+crave run --no-patch -- "rm -rf .repo/local_manifests
 # Clone local_manifests repository
-git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b main ;\
+git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b main
 # Sync the repositories
-repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
+repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags
 # Set up build environment
-source build/envsetup.sh && \
+source build/envsetup.sh
 # Lunch configuration
-lunch lineage_a517lte-eng ;\
-make installclean && \
+lunch lineage_a517lte-eng
+make installclean
 m bacon"
 
 # Pull generated zip files
