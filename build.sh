@@ -44,7 +44,6 @@ repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags && \
 export BUILD_USERNAME=${{ github.actor }} ; \
 export BUILD_HOSTNAME=crave ; \
 source build/envsetup.sh && \
-echo "Building For a5"; \
 # Lunch configuration
 lunch lineage_a517lte-eng ;\
 make installclean && \
