@@ -41,8 +41,6 @@ git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manife
 # Sync the repositories
 repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
 # Set up build environment
-export BUILD_USERNAME=${{ github.actor }} ; \
-export BUILD_HOSTNAME=crave ; \
 source build/envsetup.sh && \
 # Lunch configuration
 lunch lineage_a517lte-eng ;\
