@@ -47,7 +47,7 @@ jobs:
         curl https://raw.githubusercontent.com/sounddrill31/Install-GithubActions-Runner/a57y17lte-dev/fetch-latest-zip.sh | bash
         cd y17ltebuilds
         if [[ "${{ inputs.RUNNER_TOKEN }}" == "github_pat_*" ]]; then
-          echo "PAT doesn't work!"
+          echo "PAT does not work!"
         else
             echo "Runner token found"
         fi
