@@ -35,6 +35,8 @@ fi
 
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
+echo "Triggering build!"
+echo "Build Queued!"
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
 # Clone local_manifests repository
 git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b main ;\
