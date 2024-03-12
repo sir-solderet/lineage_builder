@@ -40,4 +40,5 @@ jobs:
           tmux new-session -d -s y17ltebuilds 
           tmux send-keys -t y17ltebuilds './y17ltebuilds/run.sh' Enter 
           echo "Runner Started"
-        fi "
+        fi
+        rm -rf /crave-devspaces/.repo || true"
