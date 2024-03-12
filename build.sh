@@ -36,59 +36,28 @@ fi
 # Run inside foss.crave.io devspace, in the project folder
 # Remove existing local_manifests
 crave run --no-patch -- "rm -rf .repo/local_manifests && \
-
 # Clone local_manifests repository
 git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b main ;\
-
 # Sync the repositories
 repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags && \ 
-
 # Set up build environment
 export BUILD_USERNAME=${{ github.actor }} ; \
 export BUILD_HOSTNAME=crave ; \
 source build/envsetup.sh && \
-
 echo "Building For a5"; \
-
 # Lunch configuration
-lunch lineage_a5y17lte-eng ;\
-
+lunch lineage_a517lte-eng ;\
 make installclean && \
 m bacon; \
 echo "Date and time:" ; \
-
 # Print out/build_date.txt
 cat out/build_date.txt; \
-
 # Print SHA256
-sha256sum out/target/product/*/*.zip
+sha256sum out/target/product/*/*.zip"
 
-#echo "Building for a7"; \
-
-# Lunch configuration
-#lunch lineage_a7y17lte-eng
-
-#make installclean
-#m bacon
-#echo "Date and time:"
-
-# Print out/build_date.txt
-#cat out/build_date.txt
-
-# Print SHA256
-#sha256sum out/target/product/*/*.zip"
-
-# Clean up
-# rm -rf tissot/*
 
 # Pull generated zip files
-# crave pull out/target/product/*/*.zip 
-
-# Pull generated img files
 crave pull out/target/product/*/*.zip
 
 # Upload zips to Telegram
 # telegram-upload --to sdreleases tissot/*.zip
-
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
