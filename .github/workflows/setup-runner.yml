@@ -47,10 +47,9 @@ jobs:
         curl https://raw.githubusercontent.com/sounddrill31/Install-GithubActions-Runner/a57y17lte-dev/fetch-latest-zip.sh | bash
         cd y17ltebuilds
         if [[ ${{ inputs.RUNNER_TOKEN }} == github_pat_* ]]; then
-        echo 'PAT doesn't work!'
+          echo 'PAT doesn't work!'
         else
             echo "Runner token found"
-            export RUNNER_TOKEN=${{ inputs.RUNNER_TOKEN }}
         fi
          cd y17ltebuilds
-         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended"
+         ./config.sh --unattended --url https://github.com/${{ inputs.GITHUB_REPO }}.git --token ${{ inputs.RUNNER_TOKEN }}"
