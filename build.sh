@@ -47,12 +47,7 @@ source build/envsetup.sh && \
 # Lunch configuration
 lunch lineage_a517lte-eng ;\
 make installclean && \
-m bacon; \
-echo "Date and time:" ; \
-# Print out/build_date.txt
-cat out/build_date.txt; \
-# Print SHA256
-sha256sum out/target/product/*/*.zip"
+m bacon"
 
 
 # Pull generated zip files
