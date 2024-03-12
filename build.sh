@@ -49,7 +49,6 @@ lunch lineage_a517lte-eng ;\
 make installclean && \
 m bacon"
 
-
 # Pull generated zip files
 crave pull out/target/product/*/*.zip
 
