@@ -48,9 +48,9 @@ jobs:
         mv actions-runner y17ltebuilds
         cd y17ltebuilds
         if [[ ${{ inputs.RUNNER_TOKEN }} == github_pat_* ]]; then
-        exit 1;
+        echo 'PAT doesn't work!'
         else
             echo "Runner token found"
             export RUNNER_TOKEN=${{ inputs.RUNNER_TOKEN }}
         fi
-         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended && echo "Done setting up!""
+         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended && echo 'Done setting up!'"
