@@ -52,4 +52,4 @@ jobs:
             echo "Runner token found"
         fi
          cd y17ltebuilds
-         ./config.sh --unattended --url https://github.com/${{ inputs.GITHUB_REPO }}.git --token ${{ inputs.RUNNER_TOKEN }}"
+         ./config.sh --unattended --url "https://github.com/${{ inputs.GITHUB_REPO }}" --token "${{ inputs.RUNNER_TOKEN }}""
