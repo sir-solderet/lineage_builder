@@ -53,4 +53,5 @@ jobs:
             echo "Runner token found"
             export RUNNER_TOKEN=${{ inputs.RUNNER_TOKEN }}
         fi
-         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended && echo 'Done setting up!'"
+         ./config.sh --url https://github.com/${{ inputs.GITHUB_REPO }} --token ${{ inputs.RUNNER_TOKEN }} --name y17ltebuilds --work work --unattended
+         echo 'Done setting up!'"
