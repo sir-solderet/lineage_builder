@@ -43,7 +43,7 @@ jobs:
 
     - name: Run crave devspace
       run: |
-        crave devspace -- "rm -rf y17ltebuilds actions-runner || true
+        crave devspace -- "rm -rf y17ltebuilds ~/actions-runner || true
         curl https://raw.githubusercontent.com/sounddrill31/Install-GithubActions-Runner/main/fetch-latest-zip.sh | bash
         mv ~/actions-runner y17ltebuilds
         cd y17ltebuilds
