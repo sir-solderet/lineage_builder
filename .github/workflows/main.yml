@@ -73,6 +73,17 @@ jobs:
           Build Failed
           logs at $(curl bashupload.com -T out/error.log)
           LineageOS 21 for a5y17lte/a7y17lte
+    - name: Telegram Notification(fail)
+      continue-on-error: true
+      if: ${{ failure() }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          Build Failed
+          logs at $(curl bashupload.com -T out/error.log)
+          LineageOS 21 for a5y17lte/a7y17lte
     - name: Find output file
       run: |
         mv */*.zip .
@@ -87,3 +98,15 @@ jobs:
           Target: LineageOS 21 for a57y17lte
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+    - name: Telegram Notification(success)
+      continue-on-error: true
+      if: ${{ success() }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+            Build Succeeded!
+            Check releases at https://github.com/a57y17lte-dev/lineage_builder/releases
+            LineageOS 21 for a5y17lte/a7y17lte
+  
