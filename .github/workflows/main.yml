@@ -33,12 +33,46 @@ jobs:
       run: |
         export BUILD_HOSTNAME=crave
         export BUILD_USERNAME=a57y17lte-dev
+    - name: Telegram Notification
+      continue-on-error: true
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          Build Triggered by ${{ github.actor }}
+          LineageOS 21 for a5y17lte/a7y17lte
     - name: Run Script
       run: bash build.sh
       # Only reach this when the user killed the workflow.
     - name: Execute if the job is cancelled
       if: ${{ cancelled() }}
       run: crave stop --all
+    - name: Telegram Notification(cancel)
+      continue-on-error: true
+      if: ${{ cancelled() }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          Build Cancelled
+          LineageOS 21 for a5y17lte/a7y17lte
+    - name: Pull Error Logs(fail)
+      continue-on-error: true
+      if: ${{ failure() }}
+      run: crave pull out/error.log
+    - name: Telegram Notification(fail)
+      continue-on-error: true
+      if: ${{ failure() }}
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          Build Failed
+          logs at $(curl bashupload.com -T out/error.log)
+          LineageOS 21 for a5y17lte/a7y17lte
     - name: Find output file
       run: |
         mv */*.zip .
