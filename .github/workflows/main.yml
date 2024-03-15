@@ -40,6 +40,7 @@ jobs:
       if: ${{ cancelled() }}
       run: crave stop --all
     - name: Telegram Notification
+      if: ${{ success() || cancelled() || failure() }}
       continue-on-error: true
       uses: xinthink/action-telegram@v1.1
       with:
