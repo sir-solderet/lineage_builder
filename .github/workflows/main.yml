@@ -33,57 +33,19 @@ jobs:
       run: |
         export BUILD_HOSTNAME=crave
         export BUILD_USERNAME=a57y17lte-dev
-    - name: Telegram Notification
-      continue-on-error: true
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Build Triggered by ${{ github.actor }}
-          LineageOS 21 for a5y17lte/a7y17lte
     - name: Run Script
       run: bash build.sh
       # Only reach this when the user killed the workflow.
     - name: Execute if the job is cancelled
       if: ${{ cancelled() }}
       run: crave stop --all
-    - name: Telegram Notification(cancel)
+    - name: Telegram Notification
       continue-on-error: true
-      if: ${{ cancelled() }}
-      uses: appleboy/telegram-action@master
+      uses: xinthink/action-telegram@v1.1
       with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Build Cancelled
-          LineageOS 21 for a5y17lte/a7y17lte
-    - name: Pull Error Logs(fail)
-      continue-on-error: true
-      if: ${{ failure() }}
-      run: crave pull out/error.log
-    - name: Telegram Notification(fail)
-      continue-on-error: true
-      if: ${{ failure() }}
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Build Failed
-          logs at $(curl bashupload.com -T out/error.log)
-          LineageOS 21 for a5y17lte/a7y17lte
-    - name: Telegram Notification(fail)
-      continue-on-error: true
-      if: ${{ failure() }}
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          Build Failed
-          logs at $(curl bashupload.com -T out/error.log)
-          LineageOS 21 for a5y17lte/a7y17lte
+        chatId: ${{ secrets.TELEGRAM_TO }}
+        botToken: ${{ secrets.TELEGRAM_TOKEN }}
+        jobStatus: ${{ job.status }}
     - name: Find output file
       run: |
         mv */*.zip .
@@ -97,16 +59,4 @@ jobs:
         body: |
           Target: LineageOS 21 for a57y17lte
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-    - name: Telegram Notification(success)
-      continue-on-error: true
-      if: ${{ success() }}
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-            Build Succeeded!
-            Check releases at https://github.com/a57y17lte-dev/lineage_builder/releases
-            LineageOS 21 for a5y17lte/a7y17lte
-  
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
