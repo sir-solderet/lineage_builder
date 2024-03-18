@@ -39,7 +39,7 @@ echo "Triggering build!"
 echo "Build Queued!"
 crave run --no-patch -- "rm -rf .repo/local_manifests/
 # Clone local_manifests repository
-git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b main
+git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b lineage-21
 # Sync the repositories
 repo sync -c -j\$(nproc --all) --force-sync --no-clone-bundle --no-tags
 # Set up build environment
