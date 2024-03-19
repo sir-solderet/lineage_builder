@@ -36,7 +36,7 @@ jobs:
         export BUILD_HOSTNAME=crave
         export BUILD_USERNAME=a57y17lte-dev
     - name: Run Script
-      run: cp crave.yaml /crave-devspaces/Lineage21/.repo/manifests; cp {build.sh,crave.conf.sample} /crave-devspaces/Lineage21; cd /crave-devspaces/Lineage21; bash build.sh
+      run:  -p /crave-devspaces/Lineage21/.repo/manifests; cp crave.yaml /crave-devspaces/Lineage21/.repo/manifests; cp {build.sh,crave.conf.sample} /crave-devspaces/Lineage21; cd /crave-devspaces/Lineage21; bash build.sh
       # Only reach this when the user killed the workflow.
     - name: Execute if the job is cancelled
       if: ${{ cancelled() }}
