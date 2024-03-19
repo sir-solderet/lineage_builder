@@ -29,6 +29,7 @@ jobs:
         repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
         git clone https://github.com/a57y17lte-dev/local_manifest.git --depth 1 -b lineage-21 .repo/local_manifests && \
         timeout 1m repo sync --force-sync || { exit_code=$?; [ $exit_code -eq 124 ] || (echo "Error: Process failed with exit code $exit_code"; exit $exit_code); }
+        rm -rf .repo
       timeout-minutes: 10    
     - name: Exports
       run: |
