@@ -18,23 +18,23 @@ jobs:
         jobStatus: "Build Started"
         skipSuccess: false
     - name: Cleanup
-      run: rm -rf * /crave-devspaces/Lineage21
+      run: rm -rf * /crave-devspaces/Lineage20
     - name: Create workspace
-      run: mkdir -p /crave-devspaces/Lineage21
+      run: mkdir -p /crave-devspaces/Lineage20
       continue-on-error: true
     - name: Enter Workspace
-      run: cd /crave-devspaces/Lineage21
+      run: cd /crave-devspaces/Lineage20
       continue-on-error: true
       # Check-out in order to access the repository's files.
     - name: Check-out to repository
       uses: actions/checkout@v4 
     - name: Test Local Manifests
       run: |
-        cd /crave-devspaces/Lineage21
+        cd /crave-devspaces/Lineage20
         rm -rf tester || true
         mkdir tester
         cd tester
-        repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+        repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
         git clone https://github.com/a57y17lte-dev/local_manifest.git --depth 1 -b lineage-21 .repo/local_manifests && \
         timeout 1m repo sync --force-sync || { exit_code=$?; [ $exit_code -eq 124 ] || (echo "Error: Process failed with exit code $exit_code"; exit $exit_code); }
         rm -rf .repo
@@ -44,11 +44,11 @@ jobs:
         export BUILD_HOSTNAME=crave
         export BUILD_USERNAME=a57y17lte-dev
     - name: Run Script
-      run: mkdir -p /crave-devspaces/Lineage21/.repo/manifests; cp crave.yaml /crave-devspaces/Lineage21/.repo/manifests; cp {build.sh,crave.conf.sample} /crave-devspaces/Lineage21; cd /crave-devspaces/Lineage21; bash build.sh
+      run: mkdir -p /crave-devspaces/Lineage20/.repo/manifests; cp crave.yaml /crave-devspaces/Lineage20/.repo/manifests; cp {build.sh,crave.conf.sample} /crave-devspaces/Lineage20; cd /crave-devspaces/Lineage20; bash build.sh
       # Only reach this when the user killed the workflow.
     - name: Execute if the job is cancelled
       if: ${{ cancelled() }}
-      run: cd /crave-devspaces/Lineage21; crave stop --all
+      run: cd /crave-devspaces/Lineage20; crave stop --all
     - name: Telegram Notification
       if: ${{ success() || cancelled() || failure() }}
       continue-on-error: true
@@ -60,7 +60,7 @@ jobs:
         skipSuccess: false
     - name: Find output file
       run: |
-        mv cd /crave-devspaces/Lineage21/*/*.zip .
+        mv /crave-devspaces/Lineage20/*/*.zip .
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
@@ -69,6 +69,6 @@ jobs:
         name: LineageOS-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body: |
-          Target: LineageOS 21 for a57y17lte
+          Target: LineageOS 20 for a57y17lte
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
