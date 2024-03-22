@@ -18,8 +18,8 @@ else
     echo "Repo already installed."
 fi
 
-# Set Crave to build using LineageOS 21 as base
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+# Set Crave to build using LineageOS 20 as base
+repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
 
 # Install crave if running outside devspace
 if [ "${DCDEVSPACE}" == "1" ]; then
@@ -39,9 +39,9 @@ echo "Triggering build!"
 echo "Build Queued!"
 crave run --no-patch -- "rm -rf .repo/local_manifests/
 # Initialize our Manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs --depth=1
 # Clone local_manifests repository
-git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b lineage-21
+git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b lineage-20
 # Sync the repositories
 /opt/crave/resync.sh
 # Set up build environment
