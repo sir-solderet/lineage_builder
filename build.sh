@@ -47,7 +47,7 @@ git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manife
 # Set up build environment
 source build/envsetup.sh
 # Lunch configuration
-lunch lineage_a5y17lte-eng
+lunch lineage_a5y17lte-ap1a-eng
 make installclean
 m bacon"
 
