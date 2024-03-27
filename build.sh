@@ -1,6 +1,16 @@
 #!/bin/bash
 
 set -e
+# Set up symlinks
+if [ "${DCDEVSPACE}" != "1" ]; then
+  echo "Symlinking devspace folder"
+  mkdir -p devspace
+  sudo mkdir -p /crave-devspaces
+  sudo ln -sf ${pwd}/devspace /crave-devspaces
+  sudo chmod 777 /crave-devspaces
+else
+  echo "We are already running in devspace... Skipping Symlinks"
+fi
 
 # Check if repo is already installed
 if ! command -v repo >/dev/null 2>&1; then
@@ -17,9 +27,18 @@ if ! command -v repo >/dev/null 2>&1; then
 else
     echo "Repo already installed."
 fi
-
+export PROJECTFOLDER="/crave-devspaces/Lineage21"
+export PROJECTID="72"
 # Set Crave to build using LineageOS 21 as base
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+if grep -q "$PROJECTFOLDER" <(crave clone list --json | jq -r '.clones[]."Cloned At"') && [ "${DCDEVSPACE}" == "1" ]; then
+    crave clone destroy -y $PROJECTFOLDER || echo "Error removing $PROJECTFOLDER"
+    crave clone create --projectID $PROJECTID $PROJECTFOLDER || echo "Crave clone create failed!"
+else  
+    rm -rf $PROJECTFOLDER || true
+    mkdir $PROJECTFOLDER
+    cd $PROJECTFOLDER
+    repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+fi
 
 # Install crave if running outside devspace
 if [ "${DCDEVSPACE}" == "1" ]; then
@@ -30,7 +49,7 @@ else
     mv ${PWD}/crave ${HOME}/bin/
     sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
     envsubst < ${PWD}/crave.conf.sample >> ${PWD}/crave.conf
-    rm -rf ${PWD}/crave.conf.sample          
+    rm -rf ${PWD}/crave.conf.sample  
 fi
 
 # Run inside foss.crave.io devspace, in the project folder
