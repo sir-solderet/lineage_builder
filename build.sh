@@ -71,7 +71,7 @@ make installclean
 m bacon"
 
 # Pull generated zip files
-crave pull out/target/product/*/*.zip
+#crave pull out/target/product/*/*.zip
 
 # Upload zips to Telegram
 # telegram-upload --to sdreleases tissot/*.zip

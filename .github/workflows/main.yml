@@ -58,17 +58,22 @@ jobs:
         botToken: ${{ secrets.TELEGRAM_TOKEN }}
         jobStatus: ${{ job.status }}
         skipSuccess: false
-    - name: Find output file
+      # Upload '.zip's and '.img's directly from 'crave' ssh.
+    - name: Upload build artifact(s)
+      continue-on-error: true
       run: |
-        mv cd /crave-devspaces/Lineage21/*/*.zip .
-    - name: Upload to Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: | 
-          *.zip
-        name: LineageOS-${{ github.run_id }}
-        tag_name: ${{ github.run_id }}
-        body: |
-          Target: LineageOS 21 for a57y17lte
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        cd $PROJECTFOLDER
+        echo "${{ secrets.GITHUB_TOKEN }}" > token.txt
+        crave push token.txt -d $(crave ssh -- pwd | grep -v Select | sed -s 's/\r//g')/
+        crave ssh -- "bash /opt/crave/github-actions/upload.sh '${{ github.run_id }}' 'a5y17lte'  '${{ github.repository }}' 'lineage-${{ github.run_id }}' '${{ secrets.EXTRA_FILES }}'"
+
+      # Pull Errors and Display them
+    - name: Display error.log
+      if: ${{ failure() }}
+      id: errorlog
+      run: |
+        cd $PROJECTFOLDER
+        crave ssh -- sleep 1
+        crave pull out/error.log
+        echo "Displaying out/error.log"
+        cat out/error.log
