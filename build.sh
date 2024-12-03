@@ -27,7 +27,7 @@ if ! command -v repo >/dev/null 2>&1; then
 else
     echo "Repo already installed."
 fi
-export PROJECTFOLDER="/crave-devspaces/Lineage21"
+export PROJECTFOLDER="/crave-devspaces/Lineage-22.0"
 export PROJECTID="72"
 # Set Crave to build using LineageOS 21 as base
 if grep -q "$PROJECTFOLDER" <(crave clone list --json | jq -r '.clones[]."Cloned At"') && [ "${DCDEVSPACE}" == "1" ]; then
@@ -37,7 +37,7 @@ else
     rm -rf $PROJECTFOLDER || true
     mkdir $PROJECTFOLDER
     cd $PROJECTFOLDER
-    repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+    repo init -u https://github.com/LineageOS/android.git -b lineage-22.0 --git-lfs
 fi
 
 # Install crave if running outside devspace
@@ -58,15 +58,15 @@ echo "Triggering build!"
 echo "Build Queued!"
 crave run --no-patch -- "rm -rf .repo/local_manifests/
 # Initialize our Manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-22.0 --git-lfs --depth=1
 # Clone local_manifests repository
-git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b lineage-21
+git clone https://github.com/trebledroid/treble_manifest -b android-15.0
 # Sync the repositories
 /opt/crave/resync.sh
 # Set up build environment
 source build/envsetup.sh
 # Lunch configuration
-lunch lineage_a5y17lte-ap1a-eng
+lunch lineage_gta9-eng
 make installclean
 m bacon"
 
