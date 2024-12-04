@@ -60,13 +60,13 @@ crave run --no-patch -- "rm -rf .repo/local_manifests/
 # Initialize our Manifest
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
 # Clone local_manifests repository
-git clone https://github.com/a57y17lte-dev/local_manifest.git .repo/local_manifests -b lineage-21
+git clone https://github.com/sir-solderet/android_device_samsung_gta9.git .repo/manifests -b lineage-21
 # Sync the repositories
 /opt/crave/resync.sh
 # Set up build environment
 source build/envsetup.sh
 # Lunch configuration
-lunch lineage_a5y17lte-ap1a-eng
+lunch lineage_gta9-eng
 make installclean
 m bacon"
 
